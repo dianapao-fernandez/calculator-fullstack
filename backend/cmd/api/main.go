@@ -14,13 +14,8 @@ func main() {
 	mux := http.NewServeMux()
 	handler.RegisterRoutes(mux)
 
-	server := &http.Server{
-		Addr:    ":8080",
-		Handler: middleware.CORS(middleware.Logger(middleware.Recovery(mux))),
-	}
+	wrapped := middleware.CORS(middleware.Logger(middleware.Recovery(mux)))
 
-	log.Println("Server listening on :8080")
-	if err := server.ListenAndServe(); err != nil {
-		log.Fatalf("server error: %v", err)
-	}
+	log.Println("Server running on :8080")
+	log.Fatal(http.ListenAndServe(":8080", wrapped))
 }
