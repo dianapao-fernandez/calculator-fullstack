@@ -1,6 +1,7 @@
+import './App.css'
+
 export const App = () => {
-  return <div>Calculator</div>
+  return <div className="app">Calculator App</div>
 }
 
 export default App
-
