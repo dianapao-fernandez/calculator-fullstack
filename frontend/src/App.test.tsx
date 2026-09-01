@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest'
 import App from './App'
 
 describe('App', () => {
-  it('renders the calculator app', () => {
+  it('renders the calculator', () => {
     render(<App />)
-    expect(screen.getByText('Calculator App')).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Calculator display' })).toBeInTheDocument()
   })
 })
