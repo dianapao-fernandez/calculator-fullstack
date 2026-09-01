@@ -72,6 +72,26 @@ describe('useCalculator', () => {
     await waitFor(() => expect(result.current.error).toBe('division by zero'))
   })
 
+  it('prevents multiple decimal points in the same value', () => {
+    const { result } = renderHook(() => useCalculator({ calculate: vi.fn() }))
+
+    act(() => result.current.inputDecimal())
+    act(() => result.current.inputDecimal())
+    act(() => result.current.inputDigit('5'))
+
+    expect(result.current.display).toBe('0.5')
+  })
+
+  it('stores the previous value when choosing an operation', () => {
+    const { result } = renderHook(() => useCalculator({ calculate: vi.fn() }))
+
+    act(() => result.current.inputDigit('4'))
+    act(() => result.current.chooseOperation('add'))
+
+    expect(result.current.previousValue).toBe('4')
+    expect(result.current.operation).toBe('add')
+  })
+
   it('clears all state', () => {
     const { result } = renderHook(() => useCalculator({ calculate: vi.fn() }))
 
