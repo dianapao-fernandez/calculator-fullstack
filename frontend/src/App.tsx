@@ -1,6 +1,8 @@
+import './App.css'
+import Calculator from './components/Calculator/Calculator'
+
 export const App = () => {
-  return <div>Calculator</div>
+  return <Calculator />
 }
 
 export default App
-

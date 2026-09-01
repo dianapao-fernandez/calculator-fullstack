@@ -1,12 +1,11 @@
-export type Operation = 'add' | 'subtract' | 'multiply' | 'divide'
-
-export interface CalculationRequest {
+export interface OperationRequest {
   a: number
-  b: number
-  operation: Operation
+  b?: number
 }
 
-export interface CalculationResponse {
-  result: number
+export interface OperationResponse {
+  result?: number
+  error?: string
 }
 
+export type Operation = 'add' | 'subtract' | 'multiply' | 'divide' | 'power' | 'sqrt' | 'percentage'
