@@ -57,7 +57,6 @@ export const Calculator = () => {
         <Button label="4" onClick={() => inputDigit('4')} className={styles.n4} />
         <Button label="5" onClick={() => inputDigit('5')} className={styles.n5} />
         <Button label="6" onClick={() => inputDigit('6')} className={styles.n6} />
-        <Button label="−" onClick={() => chooseOperation('subtract')} variant="primary" className={styles.sub} />
         <Button label="÷" onClick={() => chooseOperation('divide')} variant="primary" className={styles.div} />
 
         <Button label="1" onClick={() => inputDigit('1')} className={styles.n1} />
@@ -68,7 +67,6 @@ export const Calculator = () => {
         <Button label="0" onClick={() => inputDigit('0')} className={styles.n0} />
         <Button label="." onClick={inputDecimal} className={styles.dot} />
         <Button label="^" onClick={() => chooseOperation('power')} variant="primary" className={styles.pow} />
-        <Button label="÷" onClick={() => chooseOperation('divide')} variant="primary" className={styles.div} />
         <Button label="−" onClick={() => chooseOperation('subtract')} variant="primary" className={styles.sub} />
 
         <Button label="=" onClick={compute} variant="primary" className={styles.eq} />
