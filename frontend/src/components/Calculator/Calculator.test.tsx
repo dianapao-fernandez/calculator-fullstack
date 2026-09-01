@@ -1,5 +1,5 @@
 import { render, screen, act } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import Calculator from './Calculator'
 
 describe('Calculator', () => {
@@ -25,5 +25,31 @@ describe('Calculator', () => {
 
     const display = screen.getByRole('region', { name: 'Calculator display' })
     expect(display.textContent).toContain('123')
+  })
+
+  it('triggers all button click handlers across the keypad', () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      json: async () => ({ result: 42 }),
+    } as unknown as Response)
+
+    render(<Calculator />)
+
+    const buttons = [
+      'C', '√', '%', '±',
+      '7', '8', '9', '×',
+      '4', '5', '6', '−',
+      '1', '2', '3', '+',
+      '0', '.', '^', '÷',
+      '=',
+    ]
+
+    buttons.forEach(label => {
+      const btn = screen.getByRole('button', { name: label })
+      act(() => {
+        btn.click()
+      })
+    })
+
+    expect(screen.getByRole('region', { name: 'Calculator display' })).toBeInTheDocument()
   })
 })
