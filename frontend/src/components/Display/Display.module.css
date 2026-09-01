@@ -1,0 +1,97 @@
+.display {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+  overflow: hidden;
+  font-family: 'Orbitron', 'Courier New', monospace;
+  background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+  border: 2px solid #333;
+  border-radius: 0.5rem;
+  box-shadow:
+    inset 0 0 20px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(0, 255, 65, 0.1);
+  isolation: isolate;
+}
+
+.history {
+  z-index: 1;
+  min-height: 1.25rem;
+  font-size: 0.875rem;
+  color: #666;
+  text-align: right;
+  letter-spacing: 0.05em;
+}
+
+.main {
+  z-index: 1;
+  margin-top: 0.5rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #2dff6b;
+  text-align: right;
+  text-shadow:
+    0 0 2px rgba(45, 255, 107, 0.9),
+    0 0 6px rgba(45, 255, 107, 0.7),
+    0 0 12px rgba(45, 255, 107, 0.45);
+  word-break: break-all;
+}
+
+.value {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.error {
+  display: block;
+  color: #ff6b5f;
+  text-shadow:
+    0 0 2px rgba(255, 107, 95, 0.9),
+    0 0 6px rgba(255, 107, 95, 0.8),
+    0 0 12px rgba(255, 107, 95, 0.5);
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.loading {
+  display: block;
+  animation: blink 1s steps(1) infinite;
+  transition: opacity 0.2s ease;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  opacity: 0.4;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 480px) {
+  .display {
+    padding: 0.75rem;
+  }
+
+  .history {
+    font-size: 0.75rem;
+  }
+
+  .main {
+    font-size: 1.75rem;
+  }
+}

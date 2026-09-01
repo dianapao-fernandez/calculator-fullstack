@@ -1,7 +1,8 @@
 node_modules/
 dist/
+coverage/
+*.out
 .env
 backend/bin
 *.exe
 agent.md
-
