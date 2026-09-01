@@ -1,6 +1,6 @@
 import type { Operation, OperationRequest, OperationResponse } from '../types/calculator'
 
-const baseUrl = (import.meta.env.VITE_API_URL as string | undefined) || 'http://localhost:8080/api'
+const baseUrl = (import.meta.env.VITE_API_URL as string | undefined) || '/api'
 
 export const calculate = async (
   operation: Operation,
