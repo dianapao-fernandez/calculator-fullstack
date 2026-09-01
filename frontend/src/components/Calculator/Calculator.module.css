@@ -26,9 +26,8 @@
 
 @media (min-width: 769px) {
   .calculator {
-    width: 420px;
+    width: min(480px, calc(100vw - 32px));
     min-height: auto;
-    max-width: calc(100vw - 32px);
     margin: auto;
     padding: 1.5rem 1.25rem 1rem;
     background: #2c2c2c;
