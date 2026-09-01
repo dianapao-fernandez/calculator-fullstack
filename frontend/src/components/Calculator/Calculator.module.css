@@ -19,92 +19,30 @@
   gap: 4px;
 }
 
+.eq {
+  grid-column: span 4;
+}
+
 @media (min-width: 769px) {
   .calculator {
     width: 100%;
-    max-width: 800px;
+    max-width: 480px;
     height: auto;
-    max-height: 90vh;
+    max-height: none;
     margin: auto;
-    padding: 1.5rem;
+    padding: 2rem;
     background: #2c2c2c;
     border-radius: 24px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   }
 
-
   .keypad {
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-areas:
-      'c    pm   pct  div  pow'
-      'n7   n8   n9   mul  .'
-      'n4   n5   n6   sub  .'
-      'n1   n2   n3   add  .'
-      'n0   n0   dot  sqrt eq';
-    gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
   }
 
-  .c {
-    grid-area: c;
-  }
-  .pm {
-    grid-area: pm;
-  }
-  .pct {
-    grid-area: pct;
-  }
-  .div {
-    grid-area: div;
-  }
-  .pow {
-    grid-area: pow;
-  }
-  .mul {
-    grid-area: mul;
-  }
-  .sub {
-    grid-area: sub;
-  }
-  .add {
-    grid-area: add;
-  }
   .eq {
-    grid-area: eq;
-  }
-  .n0 {
-    grid-area: n0;
-  }
-  .n1 {
-    grid-area: n1;
-  }
-  .n2 {
-    grid-area: n2;
-  }
-  .n3 {
-    grid-area: n3;
-  }
-  .n4 {
-    grid-area: n4;
-  }
-  .n5 {
-    grid-area: n5;
-  }
-  .n6 {
-    grid-area: n6;
-  }
-  .n7 {
-    grid-area: n7;
-  }
-  .n8 {
-    grid-area: n8;
-  }
-  .n9 {
-    grid-area: n9;
-  }
-  .dot {
-    grid-area: dot;
-  }
-  .sqrt {
-    grid-area: sqrt;
+    grid-column: span 4;
+    grid-area: auto;
   }
 }

@@ -45,9 +45,9 @@ export const Calculator = () => {
 
       <div className={styles.keypad}>
         <Button label="C" onClick={clear} variant="danger" className={styles.c} />
-        <Button label="±" onClick={toggleSign} variant="secondary" className={styles.pm} />
+        <Button label="√" onClick={() => chooseOperation('sqrt')} variant="secondary" className={styles.sqrt} />
         <Button label="%" onClick={inputPercent} variant="secondary" className={styles.pct} />
-        <Button label="÷" onClick={() => chooseOperation('divide')} variant="primary" className={styles.div} />
+        <Button label="±" onClick={toggleSign} variant="secondary" className={styles.pm} />
 
         <Button label="7" onClick={() => inputDigit('7')} className={styles.n7} />
         <Button label="8" onClick={() => inputDigit('8')} className={styles.n8} />
@@ -66,9 +66,10 @@ export const Calculator = () => {
 
         <Button label="0" onClick={() => inputDigit('0')} className={styles.n0} />
         <Button label="." onClick={inputDecimal} className={styles.dot} />
-        <Button label="√" onClick={() => chooseOperation('sqrt')} variant="secondary" className={styles.sqrt} />
-        <Button label="=" onClick={compute} variant="primary" className={styles.eq} />
         <Button label="^" onClick={() => chooseOperation('power')} variant="primary" className={styles.pow} />
+        <Button label="÷" onClick={() => chooseOperation('divide')} variant="primary" className={styles.div} />
+
+        <Button label="=" onClick={compute} variant="primary" className={styles.eq} />
       </div>
     </div>
   )
