@@ -38,6 +38,59 @@ describe('useCalculator', () => {
     expect(mockCalculate).toHaveBeenCalledWith('add', { a: 5, b: 2 })
   })
 
+  it('chains multiple operations like 5 + 3 - 5 + 7 = 10', async () => {
+    const mockCalculate = vi.fn(async (op: Operation, req: OperationRequest): Promise<OperationResponse> => {
+      if (op === 'add') return { result: req.a + (req.b ?? 0) }
+      if (op === 'subtract') return { result: req.a - (req.b ?? 0) }
+      return { result: 0 }
+    })
+
+    const { result } = renderHook(() => useCalculator({ calculate: mockCalculate }))
+
+    // 5 + 3
+    act(() => result.current.inputDigit('5'))
+    act(() => result.current.chooseOperation('add'))
+    act(() => result.current.inputDigit('3'))
+
+    // Press '-' -> triggers 5 + 3 = 8
+    act(() => result.current.chooseOperation('subtract'))
+    await waitFor(() => expect(result.current.display).toBe('8'))
+    expect(mockCalculate).toHaveBeenCalledWith('add', { a: 5, b: 3 })
+
+    // - 5
+    act(() => result.current.inputDigit('5'))
+
+    // Press '+' -> triggers 8 - 5 = 3
+    act(() => result.current.chooseOperation('add'))
+    await waitFor(() => expect(result.current.display).toBe('3'))
+    expect(mockCalculate).toHaveBeenCalledWith('subtract', { a: 8, b: 5 })
+
+    // + 7
+    act(() => result.current.inputDigit('7'))
+
+    // Press '=' -> triggers 3 + 7 = 10
+    act(() => result.current.compute())
+    await waitFor(() => expect(result.current.display).toBe('10'))
+    expect(mockCalculate).toHaveBeenCalledWith('add', { a: 3, b: 7 })
+  })
+
+  it('allows switching operator before typing second operand (e.g. 5 + then * 3 = 15)', async () => {
+    const mockCalculate = vi.fn(createMockCalculate({ multiply: { result: 15 } }))
+    const { result } = renderHook(() => useCalculator({ calculate: mockCalculate }))
+
+    act(() => result.current.inputDigit('5'))
+    act(() => result.current.chooseOperation('add'))
+    // Switch operator to multiply
+    act(() => result.current.chooseOperation('multiply'))
+    expect(result.current.operation).toBe('multiply')
+
+    act(() => result.current.inputDigit('3'))
+    act(() => result.current.compute())
+
+    await waitFor(() => expect(result.current.display).toBe('15'))
+    expect(mockCalculate).toHaveBeenCalledWith('multiply', { a: 5, b: 3 })
+  })
+
   it('handles sqrt immediately', async () => {
     const mockCalculate = vi.fn(createMockCalculate({ sqrt: { result: 3 } }))
     const { result } = renderHook(() => useCalculator({ calculate: mockCalculate }))

@@ -47,7 +47,7 @@ export const useCalculator = (options: UseCalculatorOptions = {}) => {
         if (response.error) {
           setState(prev => ({
             ...prev,
-            error: response.error ?? 'Calculation error',
+            error: response.error as string,
             isLoading: false,
             waitingForOperand: true,
           }))
@@ -116,11 +116,28 @@ export const useCalculator = (options: UseCalculatorOptions = {}) => {
       setState(prev => {
         if (op === 'sqrt') {
           const current = parseFloat(prev.display)
-          if (Number.isNaN(current)) {
-            return { ...prev, error: 'Invalid number' }
-          }
           void runOperation('sqrt', { a: current }, () => ({}))
           return { ...prev, isLoading: true, error: null }
+        }
+
+        // If an operation is already pending and user entered a new operand, chain the calculation
+        if (prev.previousValue !== null && prev.operation !== null && !prev.waitingForOperand) {
+          const a = parseFloat(prev.previousValue)
+          const b = parseFloat(prev.display)
+          void runOperation(prev.operation, { a, b }, result => ({
+            previousValue: String(result),
+            operation: op,
+          }))
+          return { ...prev, isLoading: true, error: null }
+        }
+
+        // If waiting for operand and already has previousValue, just switch the operation
+        if (prev.waitingForOperand && prev.previousValue !== null) {
+          return {
+            ...prev,
+            operation: op,
+            error: null,
+          }
         }
 
         return {
@@ -147,9 +164,6 @@ export const useCalculator = (options: UseCalculatorOptions = {}) => {
 
       const a = parseFloat(prev.previousValue)
       const b = parseFloat(prev.display)
-      if (Number.isNaN(a) || Number.isNaN(b)) {
-        return { ...prev, error: 'Invalid number' }
-      }
 
       void runOperation(prev.operation, { a, b }, () => ({
         previousValue: null,
@@ -173,9 +187,6 @@ export const useCalculator = (options: UseCalculatorOptions = {}) => {
   const inputPercent = useCallback(() => {
     setState(prev => {
       const current = parseFloat(prev.display)
-      if (Number.isNaN(current)) {
-        return { ...prev, error: 'Invalid number' }
-      }
       void runOperation('percentage', { a: current, b: 1 }, () => ({}))
       return { ...prev, isLoading: true, error: null }
     })
@@ -197,3 +208,5 @@ export const useCalculator = (options: UseCalculatorOptions = {}) => {
     inputPercent,
   }
 }
+
+export default useCalculator
